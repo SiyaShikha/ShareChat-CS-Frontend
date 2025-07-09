@@ -1,12 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,8 +20,13 @@ export default function LoginForm() {
         }
       );
 
-      setMessage(response.data);
-      //   navigate("/chat");
+      const token = response.data.token;
+      console.log("Login successful, token:", token);
+
+      localStorage.setItem("token", token);
+      setMessage("Login successful!");
+
+      navigate("/chatroom");
     } catch (error: any) {
       setMessage(error.response?.data || "Login failed");
     }
