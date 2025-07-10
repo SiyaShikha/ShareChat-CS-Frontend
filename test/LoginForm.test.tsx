@@ -4,9 +4,19 @@ import LoginForm from "../src/components/LoginForm";
 import axios from "axios";
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
+import { MemoryRouter } from "react-router-dom";
 
 vi.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+const mockNavigate = vi.fn();
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
 
 describe("LoginForm", () => {
   it("renders login form inputs and button", () => {
@@ -16,16 +26,22 @@ describe("LoginForm", () => {
     expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
   });
 
-  it("shows success message on successful login", async () => {
-    mockedAxios.post.mockResolvedValueOnce({ data: "Login successful" });
-    render(<LoginForm />);
+  it("navigates to chat room page on successful login", async () => {
+    mockedAxios.post.mockResolvedValueOnce({ data: { token: "mocked-token" } });
+
+    render(
+      <MemoryRouter>
+        <LoginForm />
+      </MemoryRouter>
+    );
+
     await userEvent.type(screen.getByPlaceholderText(/username/i), "testuser");
     await userEvent.type(screen.getByPlaceholderText(/password/i), "testpass");
     await userEvent.click(screen.getByRole("button", { name: /login/i }));
 
-    await waitFor(() =>
-      expect(screen.getByText("Login successful")).toBeInTheDocument()
-    );
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith("/chatroom");
+    });
   });
 
   it("shows error message on failed login", async () => {
