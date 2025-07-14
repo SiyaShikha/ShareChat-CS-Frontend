@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import LoginForm from "../components/LoginForm";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -13,19 +14,12 @@ export default function HomePage() {
         thoughts, and engage in meaningful conversations.
       </p>
 
-      <div className="mb-8 text-center">
-        <p className="text-lg font-semibold">Already have an account?</p>
-        <p className="text-sm text-gray-500">Login to continue</p>
-        <button
-          className="mt-2 px-4 py-2 bg-blue-600 text-white rounded"
-          onClick={() => navigate("/login")}
-        >
-          Login
-        </button>
+      <div className="mb-8 max-w-md mx-auto bg-white p-6 rounded shadow">
+        <LoginForm />
       </div>
-      <div className="mb-8 text-center">
+
+      <div className="text-center">
         <p className="text-lg font-semibold">New to ShareChat?</p>
-        <p className="text-sm text-gray-500">Register to create an account</p>
         <button
           className="mt-2 px-4 py-2 bg-green-600 text-white rounded"
           onClick={() => navigate("/register")}
