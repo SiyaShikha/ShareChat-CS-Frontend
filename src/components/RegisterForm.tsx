@@ -11,10 +11,7 @@ export default function RegisterForm() {
     try {
       const response = await axios.post(
         "http://localhost:5086/api/user/register",
-        {
-          username,
-          password,
-        }
+        { username, password }
       );
       setMessage(response.data);
     } catch (error: any) {
@@ -25,21 +22,24 @@ export default function RegisterForm() {
   return (
     <form
       onSubmit={handleRegister}
-      className="max-w-sm mx-auto mt-10 p-6 bg-white rounded-lg shadow-md flex flex-col gap-4"
+      className="w-full max-w-sm mx-auto p-6 flex flex-col gap-4 bg-white rounded-lg shadow-md"
     >
-      <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
+      <h2 className="text-2xl font-bold mb-2 text-center">Register</h2>
       <input
-        className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Username"
+        required
+        className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="password"
-        className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
+        required
+        className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
         type="submit"
