@@ -13,12 +13,10 @@ export default function HomePage() {
       </header>
 
       <main className="mb-8 max-w-3xl mx-auto p-4 sm:p-6 flex flex-col md:flex-row justify-between items-center gap-8">
-        {/* Left column - Form */}
         <div className="flex-1 w-full md:w-1/2">
           <LoginForm />
         </div>
 
-        {/* Right column - Image */}
         <div className="w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
           <div className="flex-1 w-32 h-48 sm:w-48 sm:h-72 md:w-80 md:h-140 chat-girl"></div>
         </div>
@@ -28,7 +26,7 @@ export default function HomePage() {
         <div className="text-center mt-10">
           <p className="text-lg font-semibold">New to ShareChat?</p>
           <button
-            className="mt-2 px-4 py-2 bg-green-600 text-white rounded"
+            className="min-w-3xs mt-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded"
             onClick={() => navigate("/register")}
           >
             Register
