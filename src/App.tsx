@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
-import ChatRoomPage from "./pages/ChatRoomPage";
+import ChatRoomsPage from "./pages/ChatRoomsPage";
 import HomePage from "./pages/HomePage";
+import ChatRoomPage from "./pages/ChatRoomPage";
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<HomePage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/chatroom" element={<ChatRoomPage />} />
+      <Route path="/chatroom" element={<ChatRoomsPage />} />
+      <Route path="/chatroom/:roomId" element={<ChatRoomPage />} />
     </Routes>
   );
 }
