@@ -8,7 +8,7 @@ const MessageList = ({ messages }: MessageListProps) => {
 
         return (
           <div key={msg.id} className="p-2 bg-gray-100 rounded">
-            <strong>{msg.userId}: </strong>
+            <strong>{msg.userName}: </strong>
             {msg.content}
             <div className="text-xs text-gray-500">
               {new Date(msg.timestamp).toLocaleTimeString()}
