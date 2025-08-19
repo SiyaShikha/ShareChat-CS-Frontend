@@ -21,8 +21,6 @@ const ChatRoomPage = () => {
           },
         }
       );
-      console.log(res, "???????");
-
       setMessages(res.data);
     } catch {
       setError("Failed to load messages");
@@ -33,16 +31,15 @@ const ChatRoomPage = () => {
 
   const sendMessage = async (content: string) => {
     try {
-      var res = await axios.post(
+      await axios.post(
         `http://localhost:5086/api/chatroom/${roomId}/message`,
-        { Text: content },
+        { text: content },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      console.log(res, ">>>>>>>>>");
 
       fetchMessages();
     } catch (err) {
@@ -52,6 +49,12 @@ const ChatRoomPage = () => {
 
   useEffect(() => {
     fetchMessages();
+
+    // poll every second
+    const interval = setInterval(fetchMessages, 1000);
+
+    // cleanup when component unmounts or roomId changes
+    return () => clearInterval(interval);
   }, [roomId]);
 
   return (
