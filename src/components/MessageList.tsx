@@ -4,8 +4,6 @@ const MessageList = ({ messages }: MessageListProps) => {
   return (
     <div className="space-y-2 mb-4">
       {messages.map((msg) => {
-        console.log(msg, "..............Message in list............");
-
         return (
           <div key={msg.id} className="p-2 bg-gray-100 rounded">
             <strong>{msg.userName}: </strong>

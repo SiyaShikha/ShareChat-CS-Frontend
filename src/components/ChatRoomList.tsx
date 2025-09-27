@@ -60,6 +60,10 @@ export default function ChatRoomList({ onRoomJoined }: ChatRoomListProps) {
 
   useEffect(() => {
     fetchChatRooms();
+
+    const interval = setInterval(fetchChatRooms, 2000);
+
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) return <p className="text-gray-500">Loading...</p>;
