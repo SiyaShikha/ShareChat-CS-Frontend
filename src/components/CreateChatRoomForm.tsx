@@ -18,9 +18,7 @@ const CreateChatRoomForm: React.FC<Props> = ({ onRoomCreated }) => {
         "http://localhost:5086/api/chatroom",
         { name },
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          withCredentials: true,
         }
       );
 

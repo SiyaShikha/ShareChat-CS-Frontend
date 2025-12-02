@@ -11,13 +11,12 @@ export default function LoginForm() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:5086/api/user/login",
-        { username, password }
+        { username, password },
+        { withCredentials: true }
       );
 
-      const token = response.data.token;
-      localStorage.setItem("token", token);
       setMessage("Login successful!");
       navigate("/chatroom");
     } catch (error: any) {

@@ -22,9 +22,7 @@ export default function ChatRoomList({ onRoomJoined }: ChatRoomListProps) {
   const fetchChatRooms = async () => {
     try {
       const res = await axios.get("http://localhost:5086/api/chatroom", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+        withCredentials: true,
       });
       setChatRooms(res.data);
     } catch (err) {
@@ -43,9 +41,7 @@ export default function ChatRoomList({ onRoomJoined }: ChatRoomListProps) {
         `http://localhost:5086/api/chatroom/${roomId}/join`,
         {},
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          withCredentials: true,
         }
       );
 
