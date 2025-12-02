@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import * as signalR from "@microsoft/signalr";
 import type { Message } from "../utils/types";
+import axios from "axios";
 
 export default function useChatRoomMessages(roomId: string | undefined) {
   const [connection, setConnection] = useState<signalR.HubConnection | null>(
@@ -12,6 +13,22 @@ export default function useChatRoomMessages(roomId: string | undefined) {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const res = await axios.get<Message[]>(
+          `http://localhost:5086/api/chatroom/${roomId}/message`,
+          { withCredentials: true }
+        );
+        const history = res.data;
+
+        // Load DB messages first
+        setMessages(history);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load chat history");
+      }
+    };
+
     const conn = new signalR.HubConnectionBuilder()
       .withUrl("http://localhost:5086/messagehub", {
         withCredentials: true,
@@ -39,6 +56,7 @@ export default function useChatRoomMessages(roomId: string | undefined) {
       setMessages((prev) => [...prev, msg]);
     });
 
+    loadHistory();
     setConnection(conn);
 
     return () => {
@@ -48,9 +66,10 @@ export default function useChatRoomMessages(roomId: string | undefined) {
 
   const sendMessage = async (text: string) => {
     if (!connection) return;
+    const msgDto = { Text: text };
 
     try {
-      await connection.invoke("SendMessage", Number(roomId), text);
+      await connection.invoke("SendMessage", Number(roomId), msgDto);
     } catch (err) {
       console.error(err);
       setError("Failed to send message");
