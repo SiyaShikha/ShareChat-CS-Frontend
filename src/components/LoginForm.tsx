@@ -8,11 +8,13 @@ export default function LoginForm() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5086/api/user/login",
+        `${API_URL}/api/user/login`,
         { username, password },
         { withCredentials: true }
       );

@@ -19,9 +19,11 @@ export default function ChatRoomList({ onRoomJoined }: ChatRoomListProps) {
 
   const navigate = useNavigate();
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const fetchChatRooms = async () => {
     try {
-      const res = await axios.get("http://localhost:5086/api/chatroom", {
+      const res = await axios.get(`${API_URL}/api/chatroom`, {
         withCredentials: true,
       });
       setChatRooms(res.data);

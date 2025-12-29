@@ -9,13 +9,15 @@ const CreateChatRoomForm: React.FC<Props> = ({ onRoomCreated }) => {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     try {
       await axios.post(
-        "http://localhost:5086/api/chatroom",
+        `${API_URL}/api/chatroom`,
         { name },
         {
           withCredentials: true,

@@ -12,11 +12,13 @@ export default function useChatRoomMessages(roomId: string | undefined) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     const loadHistory = async () => {
       try {
         const res = await axios.get<Message[]>(
-          `http://localhost:5086/api/chatroom/${roomId}/message`,
+          `${API_URL}/api/chatroom/${roomId}/message`,
           { withCredentials: true }
         );
         const history = res.data;
