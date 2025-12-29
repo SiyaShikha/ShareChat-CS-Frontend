@@ -6,13 +6,15 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5086/api/user/register",
-        { username, password }
-      );
+      const response = await axios.post(`${API_URL}/api/user/register`, {
+        username,
+        password,
+      });
       setMessage(response.data);
     } catch (error: any) {
       setMessage(error.response?.data || "Registration failed");

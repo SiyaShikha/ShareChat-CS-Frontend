@@ -40,7 +40,7 @@ export default function ChatRoomList({ onRoomJoined }: ChatRoomListProps) {
 
     try {
       await axios.post(
-        `http://localhost:5086/api/chatroom/${roomId}/join`,
+        `${API_URL}/api/chatroom/${roomId}/join`,
         {},
         {
           withCredentials: true,

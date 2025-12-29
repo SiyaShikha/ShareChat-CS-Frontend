@@ -32,7 +32,7 @@ export default function useChatRoomMessages(roomId: string | undefined) {
     };
 
     const conn = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:5086/messagehub", {
+      .withUrl(`${API_URL}/messagehub`, {
         withCredentials: true,
       })
       .withAutomaticReconnect()
