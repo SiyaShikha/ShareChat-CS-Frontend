@@ -44,7 +44,7 @@ export default function ChatRoomList({ onRoomJoined }: ChatRoomListProps) {
         {},
         {
           withCredentials: true,
-        }
+        },
       );
 
       onRoomJoined?.(roomId);
@@ -64,32 +64,38 @@ export default function ChatRoomList({ onRoomJoined }: ChatRoomListProps) {
     return () => clearInterval(interval);
   }, []);
 
-  if (loading) return <p className="text-gray-500">Loading...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (loading) return <p className="text-gray-500 py-8 text-center">Loading...</p>;
+  if (error) return <p className="text-red-600 py-8 text-center">{error}</p>;
 
   return (
-    <ul className="space-y-2">
-      {chatRooms.map((room) => (
-        <li
-          key={room.id}
-          className="bg-white shadow p-3 rounded flex justify-between items-center hover:bg-gray-100 transition"
-        >
-          <Link
-            to={`/chatroom/${room.id}`}
-            className="text-blue-600 font-medium"
-          >
-            {room.name}
-          </Link>
-
-          <button
-            onClick={() => joinRoom(room.id)}
-            disabled={joiningRoomId === room.id}
-            className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
-          >
-            {joiningRoomId === room.id ? "Joining..." : "Join"}
-          </button>
+    <ul className="space-y-3">
+      {chatRooms.length === 0 ? (
+        <li className="bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200/50 p-8 text-center text-gray-500 shadow-lg">
+          No chat rooms available. Create one to get started!
         </li>
-      ))}
+      ) : (
+        chatRooms.map((room) => (
+          <li
+            key={room.id}
+            className="bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200/50 p-5 flex justify-between items-center hover:border-indigo-300 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 group"
+          >
+            <Link
+              to={`/chatroom/${room.id}`}
+              className="text-indigo-600 hover:text-purple-600 font-semibold text-lg flex-1 transition-colors duration-200 group-hover:translate-x-1 inline-block"
+            >
+              {room.name}
+            </Link>
+
+            <button
+              onClick={() => joinRoom(room.id)}
+              disabled={joiningRoomId === room.id}
+              className="ml-4 px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors duration-300 shadow-md"
+            >
+              {joiningRoomId === room.id ? "Joining..." : "Join"}
+            </button>
+          </li>
+        ))
+      )}
     </ul>
   );
 }
