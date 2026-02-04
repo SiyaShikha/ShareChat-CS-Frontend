@@ -1,3 +1,4 @@
+import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import LoginForm from "../src/components/LoginForm";
@@ -7,7 +8,7 @@ import { vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 
 vi.mock("axios");
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+const mockedAxios = axios as any;
 
 const mockNavigate = vi.fn();
 vi.mock("react-router-dom", async () => {
@@ -21,9 +22,9 @@ vi.mock("react-router-dom", async () => {
 describe("LoginForm", () => {
   it("renders login form inputs and button", () => {
     render(<LoginForm />);
-    expect(screen.getByPlaceholderText(/username/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/enter your username/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/enter your password/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /sign in/i })).toBeInTheDocument();
   });
 
   it("navigates to chat room page on successful login", async () => {
@@ -35,9 +36,9 @@ describe("LoginForm", () => {
       </MemoryRouter>
     );
 
-    await userEvent.type(screen.getByPlaceholderText(/username/i), "testuser");
-    await userEvent.type(screen.getByPlaceholderText(/password/i), "testpass");
-    await userEvent.click(screen.getByRole("button", { name: /login/i }));
+    await userEvent.type(screen.getByPlaceholderText(/enter your username/i), "testuser");
+    await userEvent.type(screen.getByPlaceholderText(/enter your password/i), "testpass");
+    await userEvent.click(screen.getByRole("button", { name: /sign in/i }));
 
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/chatroom");
@@ -49,9 +50,9 @@ describe("LoginForm", () => {
       response: { data: "Invalid credentials" },
     });
     render(<LoginForm />);
-    await userEvent.type(screen.getByPlaceholderText(/username/i), "baduser");
-    await userEvent.type(screen.getByPlaceholderText(/password/i), "badpass");
-    await userEvent.click(screen.getByRole("button", { name: /login/i }));
+    await userEvent.type(screen.getByPlaceholderText(/enter your username/i), "baduser");
+    await userEvent.type(screen.getByPlaceholderText(/enter your password/i), "badpass");
+    await userEvent.click(screen.getByRole("button", { name: /sign in/i }));
 
     await waitFor(() =>
       expect(screen.getByText("Invalid credentials")).toBeInTheDocument()
